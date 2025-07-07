@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sophia – AI Facilitator</title>
+</head>
+<body>
+  <h2>Sophia – AI Facilitator</h2>
+  <div>
+    <textarea id="message" rows="4" cols="60" placeholder="Ask Sophia something..."></textarea><br>
+    <button onclick="sendMessage()">Send</button>
+  </div>
+  <div id="response" style="margin-top:20px;"></div>
+
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById("message").value;
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message })
+      });
+      const data = await res.json();
+      document.getElementById("response").innerText = data.response || data.error;
+    }
+  </script>
+</body>
+</html>
